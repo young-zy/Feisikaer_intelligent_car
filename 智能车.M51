@@ -1,0 +1,173 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/03/2017  13:16:20  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, main.obj TO 智能车 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  main.obj (MAIN)
+  D:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  智能车 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0008H     UNIT         ?DT?MAIN
+            IDATA   0010H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     008CH     UNIT         ?C_C51STARTUP
+            CODE    009AH     0064H     UNIT         ?PR?T0_INTERRUPT?MAIN
+            CODE    00FEH     0012H     UNIT         ?PR?_RUNPWM?MAIN
+            CODE    0110H     0011H     UNIT         ?PR?MAIN?MAIN
+            CODE    0121H     0011H     UNIT         ?C_INITSEG
+            CODE    0132H     000BH     UNIT         ?PR?_DELAY?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   智能车 (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+*** NEW ROOT ***************************************************
+
+?PR?T0_INTERRUPT?MAIN
+  +--> ?PR?_RUNPWM?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  智能车 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2017  13:16:20  PAGE 2
+
+
+
+  -------         MODULE        ?C_STARTUP
+  C:000EH         SEGMENT       ?C_C51STARTUP
+  I:0010H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0011H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:000EH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:000EH         LINE#         133
+  C:0010H         LINE#         134
+  C:0011H         LINE#         135
+  C:0012H         LINE#         136
+  C:0014H         LINE#         185
+  C:0017H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  B:00B0H.0       PUBLIC        Loutput
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  B:00B0H.1       PUBLIC        Routput
+  C:00FEH         PUBLIC        _runPwm
+  D:00A8H         PUBLIC        IE
+  C:0132H         PUBLIC        _delay
+  D:0008H         PUBLIC        cycle
+  D:000AH         PUBLIC        cycle_limit
+  D:000CH         PUBLIC        Lduty_ratio
+  D:00B8H         PUBLIC        IP
+  D:000EH         PUBLIC        Rduty_ratio
+  C:0110H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2017  13:16:20  PAGE 3
+
+
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  C:009AH         PUBLIC        T0_interrupt
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0110H         LINE#         20
+  C:0110H         LINE#         21
+  C:0113H         LINE#         22
+  C:0116H         LINE#         23
+  C:0119H         LINE#         24
+  C:011BH         LINE#         25
+  C:011DH         LINE#         26
+  C:011FH         LINE#         27
+  C:011FH         LINE#         29
+  -------         ENDPROC       MAIN
+  -------         PROC          T0_INTERRUPT
+  C:009AH         LINE#         34
+  C:00B7H         LINE#         35
+  C:00C4H         LINE#         36
+  C:00D1H         LINE#         37
+  C:00D9H         LINE#         38
+  C:00DFH         LINE#         39
+  C:00E3H         LINE#         40
+  C:00E3H         LINE#         41
+  -------         ENDPROC       T0_INTERRUPT
+  -------         PROC          _RUNPWM
+  D:0006H         SYMBOL        arg
+  C:00FEH         LINE#         43
+  C:00FEH         LINE#         44
+  C:0107H         LINE#         45
+  C:010CH         LINE#         46
+  C:010CH         LINE#         47
+  C:010FH         LINE#         48
+  C:010FH         LINE#         49
+  -------         ENDPROC       _RUNPWM
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        i
+  C:0132H         LINE#         51
+  C:0132H         LINE#         52
+  C:013CH         LINE#         53
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        MAIN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MAIN
+
+Program Size: data=17.0 xdata=0 code=309
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

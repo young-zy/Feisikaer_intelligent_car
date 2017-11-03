@@ -1,0 +1,45 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+D:\Users\youngzy\Documents\GitHub\Feisikaer_intelligent_car\智能车.uvproj
+Project File Date:  11/03/2017
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(9): error C129: missing ';' before 'Lduty_ratio'
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(36): warning C206: 'runPwm': missing function-prototype
+main.c(36): error C267: 'runPwm': requires ANSI-style prototype
+main.c(37): error C202: 'Routput': undefined identifier
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(7): error C132: '_delay': not in formal parameter list
+main.c(7): error C141: syntax error near 'sbit'
+main.c(7): error C136: 'Linput': 'void' on variable
+main.c(7): error C244: 'Linput': can't initialize, bad type or class
+main.c(7): error C136: 'Linput': 'void' on variable
+main.c(7): error C132: 'Linput': not in formal parameter list
+main.c(8): error C141: syntax error near 'sbit'
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(36): error C202: 'Routput': undefined identifier
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MAIN
+Program Size: data=17.0 xdata=0 code=309
+"智能车" - 0 Error(s), 1 Warning(s).
