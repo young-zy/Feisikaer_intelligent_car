@@ -1,4 +1,4 @@
-C51 COMPILER V9.52.0.0   MAIN                                                              11/03/2017 13:16:20 PAGE 1   
+C51 COMPILER V9.52.0.0   MAIN                                                              11/24/2017 21:25:51 PAGE 1   
 
 
 C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
@@ -12,64 +12,115 @@ line level    source
    3          
    4          int runPwm(u16 arg);
    5          void delay(u16 i);
-   6          
-   7          sbit Linput = P2^0;
-   8          sbit Rinput = P2^1;
-   9          sbit Loutput = P3^0;
-  10          sbit Routput = P3^1;
-  11          u16 Lduty_ratio=0;    //Left duty ratio
-  12          u16 Rduty_ratio=0;    //Right duty ratio
-  13          u16 cycle_limit=100;  //Pwm cycle limit
-  14          u16 cycle=0;          //Pwm cycle value
-  15          
-  16          
-  17          
-  18          
-  19          
-  20          void main(){
-  21   1        TMOD=0x01;
-  22   1        TH0=(65536-50000)/256;
-  23   1        TL0=(65536-50000)%256;
-  24   1        EA=1;
-  25   1        ET0=1;
-  26   1        TR0=1;
-  27   1        while(1){
-  28   2          
-  29   2        }
-  30   1      }
-  31          
-  32          
-  33          
-  34          void T0_interrupt() interrupt 1{
-  35   1        Loutput = runPwm(Lduty_ratio);
-  36   1        Routput = runPwm(Rduty_ratio);
-  37   1        cycle++;
-  38   1        if(cycle==100){
-  39   2          cycle=0;
-  40   2        }
-  41   1      }
-  42          
-  43          int runPwm(u16 arg){
-  44   1        if(cycle<arg){
-  45   2          return 1;
-  46   2        }else{
-  47   2          return 0;
-  48   2        }
-  49   1      }
-  50          
-  51          void delay(u16 i){
-  52   1        while(i--);
-  53   1      }
+   6          int get_status();
+   7          
+   8          sbit Linput = P2^0;
+   9          sbit Rinput = P2^1;
+  10          sbit Loutput = P3^2;
+  11          sbit Routput = P3^3;
+  12          u16 Lduty_ratio=0;    //Left duty ratio
+  13          u16 Rduty_ratio=0;    //Right duty ratio
+  14          u16 cycle_limit=100;  //Pwm cycle limit
+  15          u16 cycle=0;          //Pwm cycle value
+  16          u16 flag=0;           //status flag || 0 for none || 1 for Left input || 2 for right input || 3 for both
+  17          u16 Ojudge=0;
+  18          sbit LL=P3^4;
+  19          sbit LR=P3^5;
+  20          sbit RL=P3^6;
+  21          sbit RR=P3^7;
+  22          
+  23          
+  24          
+  25          void main(){
+  26   1        TMOD=0x01;
+  27   1        TH0=(65536-10000)/256;
+  28   1        TL0=(65536-10000)%256;
+  29   1        EA=1;
+  30   1        ET0=1;
+  31   1        TR0=1;
+  32   1        while(1){
+  33   2          flag=get_status();;
+  34   2      //    if(Ojudge==3){break;}
+  35   2          if(flag==0){
+  36   3            Lduty_ratio = 30;
+  37   3            Rduty_ratio = 20;
+  38   3            LL=0;
+  39   3            LR=1;
+  40   3            RL=0;
+  41   3            RR=1;
+  42   3          }else if(flag==1){
+  43   3            RL=0;
+  44   3            RR=1;
+  45   3            LL=1;
+  46   3            LR=0;
+  47   3            Lduty_ratio = 30;  //turn left
+  48   3            Rduty_ratio = 90;
+  49   3          }else if(flag==2){
+  50   3            LL=0;
+  51   3            LR=1;
+  52   3            RL=1;
+  53   3            RR=0;
+  54   3            Lduty_ratio = 90;  //turn right
+  55   3            Rduty_ratio = 20;
+C51 COMPILER V9.52.0.0   MAIN                                                              11/24/2017 21:25:51 PAGE 2   
 
+  56   3      //    }else if(flag==3){
+  57   3      //      Lduty_ratio = 40;  //turn left rapidly
+  58   3      //      Rduty_ratio = 70;
+  59   3      //    }else if(flag==4){
+  60   3      //      Lduty_ratio = 70;  //turn right rapidly
+  61   3      //      Rduty_ratio = 40;
+  62   3          }
+  63   2        }
+  64   1      }
+  65          
+  66          
+  67          
+  68          void T0_interrupt() interrupt 1{
+  69   1        TH0=(65536-1000)/256;
+  70   1        TL0=(65536-1000)%256;
+  71   1        Loutput = runPwm(Lduty_ratio);
+  72   1        Routput = runPwm(Rduty_ratio);
+  73   1        cycle++;
+  74   1        if(cycle==100){
+  75   2          cycle=0;
+  76   2        }
+  77   1      }
+  78          
+  79          int runPwm(u16 arg){
+  80   1        if(cycle<arg){
+  81   2          return 1;
+  82   2        }else{
+  83   2          return 0;
+  84   2        }
+  85   1      }
+  86          
+  87          int get_status(){
+  88   1        if(Linput==1){
+  89   2      //    if(Rinput==1){
+  90   2      //      Ojudge++;
+  91   2      //      return 3; 
+  92   2      //    }else{
+  93   2            return 1;
+  94   2      //    }
+  95   2        }else if(Rinput==1){
+  96   2          return 2;
+  97   2        }else{  
+  98   2          return 0;
+  99   2        }
+ 100   1      }
+ 101          
+ 102          void delay(u16 i){
+ 103   1        while(i--);
+ 104   1      }
 
-C51 COMPILER V9.52.0.0   MAIN                                                              11/03/2017 13:16:20 PAGE 2   
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    146    ----
+   CODE SIZE        =    259    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      8    ----
+   DATA SIZE        =     12    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

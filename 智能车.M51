@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        11/03/2017  13:16:20  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/24/2017  21:25:51  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -22,19 +22,20 @@ LINK MAP OF MODULE:  智能车 (?C_STARTUP)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     0008H     UNIT         ?DT?MAIN
-            IDATA   0010H     0001H     UNIT         ?STACK
+            DATA    0008H     000CH     UNIT         ?DT?MAIN
+            IDATA   0014H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
                     0003H     0008H                  *** GAP ***
             CODE    000BH     0003H     ABSOLUTE     
             CODE    000EH     008CH     UNIT         ?C_C51STARTUP
-            CODE    009AH     0064H     UNIT         ?PR?T0_INTERRUPT?MAIN
-            CODE    00FEH     0012H     UNIT         ?PR?_RUNPWM?MAIN
-            CODE    0110H     0011H     UNIT         ?PR?MAIN?MAIN
-            CODE    0121H     0011H     UNIT         ?C_INITSEG
-            CODE    0132H     000BH     UNIT         ?PR?_DELAY?MAIN
+            CODE    009AH     006AH     UNIT         ?PR?T0_INTERRUPT?MAIN
+            CODE    0104H     0068H     UNIT         ?PR?MAIN?MAIN
+            CODE    016CH     0019H     UNIT         ?C_INITSEG
+            CODE    0185H     0014H     UNIT         ?PR?GET_STATUS?MAIN
+            CODE    0199H     0012H     UNIT         ?PR?_RUNPWM?MAIN
+            CODE    01ABH     000BH     UNIT         ?PR?_DELAY?MAIN
 
 
 
@@ -48,6 +49,9 @@ SEGMENT
   +--> ?PR?MAIN?MAIN
   +--> ?C_INITSEG
 
+?PR?MAIN?MAIN
+  +--> ?PR?GET_STATUS?MAIN
+
 *** NEW ROOT ***************************************************
 
 ?PR?T0_INTERRUPT?MAIN
@@ -55,17 +59,17 @@ SEGMENT
 
 
 
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2017  21:25:51  PAGE 2
+
+
 SYMBOL TABLE OF MODULE:  智能车 (?C_STARTUP)
 
   VALUE           TYPE          NAME
   ----------------------------------
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2017  13:16:20  PAGE 2
-
-
 
   -------         MODULE        ?C_STARTUP
   C:000EH         SEGMENT       ?C_C51STARTUP
-  I:0010H         SEGMENT       ?STACK
+  I:0014H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
   D:00F0H         SYMBOL        B
@@ -99,75 +103,123 @@ SYMBOL TABLE OF MODULE:  智能车 (?C_STARTUP)
 
   -------         MODULE        MAIN
   C:0000H         SYMBOL        _ICE_DUMMY_
+  B:00A0H.0       PUBLIC        Linput
   D:0090H         PUBLIC        P1
-  B:00B0H.0       PUBLIC        Loutput
+  B:00B0H.2       PUBLIC        Loutput
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
+  B:00A0H.1       PUBLIC        Rinput
   B:00A8H.7       PUBLIC        EA
-  B:00B0H.1       PUBLIC        Routput
-  C:00FEH         PUBLIC        _runPwm
+  B:00B0H.3       PUBLIC        Routput
+  C:0199H         PUBLIC        _runPwm
   D:00A8H         PUBLIC        IE
-  C:0132H         PUBLIC        _delay
+  C:01ABH         PUBLIC        _delay
   D:0008H         PUBLIC        cycle
   D:000AH         PUBLIC        cycle_limit
+  B:00B0H.4       PUBLIC        LL
   D:000CH         PUBLIC        Lduty_ratio
   D:00B8H         PUBLIC        IP
-  D:000EH         PUBLIC        Rduty_ratio
-  C:0110H         PUBLIC        main
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2017  21:25:51  PAGE 3
+
+
+  D:000EH         PUBLIC        flag
+  B:00B0H.6       PUBLIC        RL
+  B:00B0H.5       PUBLIC        LR
+  D:0010H         PUBLIC        Rduty_ratio
+  B:00B0H.7       PUBLIC        RR
+  C:0104H         PUBLIC        main
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
   B:00A8H.1       PUBLIC        ET0
+  C:0185H         PUBLIC        get_status
   D:008CH         PUBLIC        TH0
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2017  13:16:20  PAGE 3
-
-
   D:008AH         PUBLIC        TL0
   B:0088H.4       PUBLIC        TR0
   C:009AH         PUBLIC        T0_interrupt
+  D:0012H         PUBLIC        Ojudge
   D:00C8H         PUBLIC        T2CON
   D:00D0H         PUBLIC        PSW
   -------         PROC          MAIN
-  C:0110H         LINE#         20
-  C:0110H         LINE#         21
-  C:0113H         LINE#         22
-  C:0116H         LINE#         23
-  C:0119H         LINE#         24
-  C:011BH         LINE#         25
-  C:011DH         LINE#         26
-  C:011FH         LINE#         27
-  C:011FH         LINE#         29
+  C:0104H         LINE#         25
+  C:0104H         LINE#         26
+  C:0107H         LINE#         27
+  C:010AH         LINE#         28
+  C:010DH         LINE#         29
+  C:010FH         LINE#         30
+  C:0111H         LINE#         31
+  C:0113H         LINE#         32
+  C:0113H         LINE#         33
+  C:011AH         LINE#         35
+  C:0120H         LINE#         36
+  C:0125H         LINE#         37
+  C:012AH         LINE#         38
+  C:012CH         LINE#         39
+  C:012EH         LINE#         40
+  C:0130H         LINE#         41
+  C:0132H         LINE#         42
+  C:013CH         LINE#         43
+  C:013EH         LINE#         44
+  C:0140H         LINE#         45
+  C:0142H         LINE#         46
+  C:0144H         LINE#         47
+  C:0149H         LINE#         48
+  C:014EH         LINE#         49
+  C:0158H         LINE#         50
+  C:015AH         LINE#         51
+  C:015CH         LINE#         52
+  C:015EH         LINE#         53
+  C:0160H         LINE#         54
+  C:0165H         LINE#         55
+  C:016AH         LINE#         62
+  C:016AH         LINE#         63
   -------         ENDPROC       MAIN
   -------         PROC          T0_INTERRUPT
-  C:009AH         LINE#         34
-  C:00B7H         LINE#         35
-  C:00C4H         LINE#         36
-  C:00D1H         LINE#         37
-  C:00D9H         LINE#         38
-  C:00DFH         LINE#         39
-  C:00E3H         LINE#         40
-  C:00E3H         LINE#         41
+  C:009AH         LINE#         68
+  C:00B7H         LINE#         69
+  C:00BAH         LINE#         70
+  C:00BDH         LINE#         71
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2017  21:25:51  PAGE 4
+
+
+  C:00CAH         LINE#         72
+  C:00D7H         LINE#         73
+  C:00DFH         LINE#         74
+  C:00E5H         LINE#         75
+  C:00E9H         LINE#         76
+  C:00E9H         LINE#         77
   -------         ENDPROC       T0_INTERRUPT
   -------         PROC          _RUNPWM
   D:0006H         SYMBOL        arg
-  C:00FEH         LINE#         43
-  C:00FEH         LINE#         44
-  C:0107H         LINE#         45
-  C:010CH         LINE#         46
-  C:010CH         LINE#         47
-  C:010FH         LINE#         48
-  C:010FH         LINE#         49
+  C:0199H         LINE#         79
+  C:0199H         LINE#         80
+  C:01A2H         LINE#         81
+  C:01A7H         LINE#         82
+  C:01A7H         LINE#         83
+  C:01AAH         LINE#         84
+  C:01AAH         LINE#         85
   -------         ENDPROC       _RUNPWM
+  -------         PROC          GET_STATUS
+  C:0185H         LINE#         87
+  C:0185H         LINE#         88
+  C:0188H         LINE#         93
+  C:018DH         LINE#         95
+  C:0190H         LINE#         96
+  C:0195H         LINE#         97
+  C:0195H         LINE#         98
+  C:0198H         LINE#         99
+  C:0198H         LINE#         100
+  -------         ENDPROC       GET_STATUS
   -------         PROC          _DELAY
   D:0006H         SYMBOL        i
-  C:0132H         LINE#         51
-  C:0132H         LINE#         52
-  C:013CH         LINE#         53
+  C:01ABH         LINE#         102
+  C:01ABH         LINE#         103
+  C:01B5H         LINE#         104
   -------         ENDPROC       _DELAY
   -------         ENDMOD        MAIN
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_DELAY?MAIN
 
-Program Size: data=17.0 xdata=0 code=309
+Program Size: data=21.0 xdata=0 code=430
 LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
