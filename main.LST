@@ -1,4 +1,4 @@
-C51 COMPILER V9.52.0.0   MAIN                                                              11/24/2017 21:25:51 PAGE 1   
+C51 COMPILER V9.52.0.0   MAIN                                                              11/25/2017 10:56:35 PAGE 1   
 
 
 C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
@@ -16,7 +16,7 @@ line level    source
    7          
    8          sbit Linput = P2^0;
    9          sbit Rinput = P2^1;
-  10          sbit Loutput = P3^2;
+  10          sbit Loutput = P1^0;
   11          sbit Routput = P3^3;
   12          u16 Lduty_ratio=0;    //Left duty ratio
   13          u16 Rduty_ratio=0;    //Right duty ratio
@@ -33,8 +33,8 @@ line level    source
   24          
   25          void main(){
   26   1        TMOD=0x01;
-  27   1        TH0=(65536-10000)/256;
-  28   1        TL0=(65536-10000)%256;
+  27   1        TH0=(65536-700)/256;
+  28   1        TL0=(65536-700)%256;
   29   1        EA=1;
   30   1        ET0=1;
   31   1        TR0=1;
@@ -42,8 +42,8 @@ line level    source
   33   2          flag=get_status();;
   34   2      //    if(Ojudge==3){break;}
   35   2          if(flag==0){
-  36   3            Lduty_ratio = 30;
-  37   3            Rduty_ratio = 20;
+  36   3            Lduty_ratio = 35;
+  37   3            Rduty_ratio = 35;
   38   3            LL=0;
   39   3            LR=1;
   40   3            RL=0;
@@ -53,16 +53,16 @@ line level    source
   44   3            RR=1;
   45   3            LL=1;
   46   3            LR=0;
-  47   3            Lduty_ratio = 30;  //turn left
-  48   3            Rduty_ratio = 90;
+  47   3            Lduty_ratio = 50;  //turn left
+  48   3            Rduty_ratio = 50;
   49   3          }else if(flag==2){
   50   3            LL=0;
   51   3            LR=1;
   52   3            RL=1;
   53   3            RR=0;
-  54   3            Lduty_ratio = 90;  //turn right
-  55   3            Rduty_ratio = 20;
-C51 COMPILER V9.52.0.0   MAIN                                                              11/24/2017 21:25:51 PAGE 2   
+  54   3            Lduty_ratio = 50;  //turn right
+  55   3            Rduty_ratio = 50;
+C51 COMPILER V9.52.0.0   MAIN                                                              11/25/2017 10:56:35 PAGE 2   
 
   56   3      //    }else if(flag==3){
   57   3      //      Lduty_ratio = 40;  //turn left rapidly
@@ -77,8 +77,8 @@ line level    source
   66          
   67          
   68          void T0_interrupt() interrupt 1{
-  69   1        TH0=(65536-1000)/256;
-  70   1        TL0=(65536-1000)%256;
+  69   1        TH0=(65536-700)/256;
+  70   1        TL0=(65536-700)%256;
   71   1        Loutput = runPwm(Lduty_ratio);
   72   1        Routput = runPwm(Rduty_ratio);
   73   1        cycle++;

@@ -7,7 +7,7 @@ int get_status();
 
 sbit Linput = P2^0;
 sbit Rinput = P2^1;
-sbit Loutput = P3^2;
+sbit Loutput = P1^0;
 sbit Routput = P3^3;
 u16 Lduty_ratio=0;    //Left duty ratio
 u16 Rduty_ratio=0;		//Right duty ratio
@@ -24,8 +24,8 @@ sbit RR=P3^7;
 
 void main(){
 	TMOD=0x01;
-	TH0=(65536-10000)/256;
-	TL0=(65536-10000)%256;
+	TH0=(65536-700)/256;
+	TL0=(65536-700)%256;
 	EA=1;
 	ET0=1;
 	TR0=1;
@@ -33,8 +33,8 @@ void main(){
 		flag=get_status();;
 //		if(Ojudge==3){break;}
 		if(flag==0){
-			Lduty_ratio = 30;
-			Rduty_ratio = 20;
+			Lduty_ratio = 35;
+			Rduty_ratio = 35;
 			LL=0;
 			LR=1;
 			RL=0;
@@ -44,15 +44,15 @@ void main(){
 			RR=1;
 			LL=1;
 			LR=0;
-			Lduty_ratio = 30;  //turn left
-			Rduty_ratio = 90;
+			Lduty_ratio = 50;  //turn left
+			Rduty_ratio = 50;
 		}else if(flag==2){
 			LL=0;
 			LR=1;
 			RL=1;
 			RR=0;
-			Lduty_ratio = 90;  //turn right
-			Rduty_ratio = 20;
+			Lduty_ratio = 50;  //turn right
+			Rduty_ratio = 50;
 //		}else if(flag==3){
 //			Lduty_ratio = 40;  //turn left rapidly
 //			Rduty_ratio = 70;
@@ -66,8 +66,8 @@ void main(){
 
 
 void T0_interrupt() interrupt 1{
-	TH0=(65536-1000)/256;
-	TL0=(65536-1000)%256;
+	TH0=(65536-700)/256;
+	TL0=(65536-700)%256;
 	Loutput = runPwm(Lduty_ratio);
 	Routput = runPwm(Rduty_ratio);
 	cycle++;
