@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
 
+
 # Object files
 *.o
 *.ko
@@ -50,3 +51,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
+
+*.LST
+*.uvgui.young
+*.bak
+*.uvopt
